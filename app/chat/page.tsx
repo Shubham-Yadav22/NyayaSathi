@@ -84,11 +84,12 @@ export default function LegalChatbot() {
     setIsTyping(true);
 
     try {
-      const response = await fetch("/api/chatbot", {
+      const response = await fetch("https://nyaya-backend.onrender.com/query", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: inputMessage }),
-      });
+      })
+      
 
       const data = await response.json();
       console.log("✅ API Response:", data);

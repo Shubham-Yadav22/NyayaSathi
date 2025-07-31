@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const { message } = await req.json()
   const scriptPath = path.resolve(process.cwd(), "backend/query_vector_db.py")
 
-  return new Promise((resolve, _reject) => {
+  return new Promise((resolve) => {
     const process = spawn("python", [scriptPath, message])
 
     let result = ""

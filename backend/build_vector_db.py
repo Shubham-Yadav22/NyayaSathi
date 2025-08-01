@@ -5,8 +5,7 @@ from sentence_transformers import SentenceTransformer
 
 # Load model and ChromaDB client
 model = SentenceTransformer("all-mpnet-base-v2")
-chroma = chromadb.PersistentClient(path="chroma_store")  # ✅ new API
-
+chroma = chromadb.PersistentClient(path="chroma_store")
 collection = chroma.get_or_create_collection(name="legal_docs")
 
 # Load your JSON data
@@ -20,7 +19,15 @@ for i, item in enumerate(data):
     section = item.get("bns_section", "")
     title = item.get("subject", "")
     content = item.get("extra_data", "")
-    doc_text = f"BNS Section: {section}\nSubject: {title}\n\n{content}"
+    summary = item.get("summary", "")
+    doc_text = (
+        f"Section {section} of the Bharatiya Nyaya Sanhita (BNS)\n"
+        f"Title: {title}\n\n"
+        f"{item['extra_data']}\n\n"
+        f"Summary:\n{item['summary']}"
+    )
+
+
     documents.append(doc_text)
     ids.append(f"doc_{i}")
 
